@@ -74,8 +74,8 @@ def handle_webhook(payload):
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
-    logging.info("Webhook endpoint hit")
-    payload = request.data
+    print("Webhook endpoint hit")
+    print(f"Raw payload: {payload}")
     logging.info(f"Raw payload: {payload}")
     try:
         data = json.loads(payload)
@@ -87,4 +87,5 @@ def webhook():
         abort(500)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
