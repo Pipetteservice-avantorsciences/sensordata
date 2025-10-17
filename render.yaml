@@ -1,9 +1,9 @@
 services:
   - type: web
-    name: webhook-forwarder
+    name: webhook_receiver
     env: python
     buildCommand: ""
-    startCommand: "python forwarder.py"
+    startCommand: "python webhook_receiver.py"
     plan: free
     autoDeploy: true
     envVars: []
