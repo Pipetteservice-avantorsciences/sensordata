@@ -9,6 +9,8 @@ import json
 import os
 from dotenv import load_dotenv
 
+os.environ["FLASK_ENV"] = "development"
+
 import logging
 logging.basicConfig(level=logging.INFO)
 
