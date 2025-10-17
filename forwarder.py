@@ -10,7 +10,7 @@ def forward_webhook():
         data = request.get_json()
 
         # Forward it to your local endpoint
-        response = requests.post('http://localhost:8501/webhook', json=data)
+        response = requests.post('http://localhost:5000/webhook', json=data)
 
         # Return status
         return f"Forwarded with status {response.status_code}", response.status_code
