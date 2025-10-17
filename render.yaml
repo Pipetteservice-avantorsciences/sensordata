@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: webhook_receiver
+    name: python webhook_receiver
     env: python
     buildCommand: ""
     startCommand: "python webhook_receiver.py"
