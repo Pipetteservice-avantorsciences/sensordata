@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: webhook-forwarder
+    env: python
+    buildCommand: ""
+    startCommand: "python forwarder.py"
+    plan: free
+    autoDeploy: true
+    envVars: []
+    ports:
+      - port: 5000
