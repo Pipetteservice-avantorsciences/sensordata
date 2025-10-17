@@ -74,14 +74,16 @@ def handle_webhook(payload):
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
+    logging.info("Webhook endpoint hit")
     payload = request.data
-
+    logging.info(f"Raw payload: {payload}")
     try:
         data = json.loads(payload)
+        logging.info(f"Parsed JSON: {data}")
         handle_webhook(data)
         return '', 200
     except Exception as e:
-        logging.error(f"Error: {e}")
+        logging.error(f"Error parsing JSON: {e}")
         abort(500)
 
 if __name__ == '__main__':
