@@ -74,11 +74,11 @@ def handle_webhook(payload):
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
-    print("Webhook endpoint hit")
+    print("Webhook route triggered")  #
+    payload = request.data
     print(f"Raw payload: {payload}")
-    logging.info(f"Raw payload: {payload}")
     try:
-        data = json.loads(payload)
+        print("Parsed JSON:", data)
         logging.info(f"Parsed JSON: {data}")
         handle_webhook(data)
         return '', 200
