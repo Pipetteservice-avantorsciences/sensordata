@@ -24,6 +24,7 @@ hmac_secret_key = os.getenv("WEBHOOK_SECRET_KEY")
 # Set up the application
 app = Flask(__name__)
 
+
 # Our latest readings; this is going to be our "memory"
 class CurrentState(BaseModel):
     timestamp: datetime
@@ -55,7 +56,7 @@ def parse_authorization_header() -> tuple[str, str]:
 
 
 def verify_signature(payload, signature, nonce):
-    key = (hmac_secret_key + nonce).encode('utf-8')
+    key = (hmac_secret_key + nonce).encode("utf-8")
     computed_hmac = hmac.new(key, payload, hashlib.sha256).digest()
     computed_signature = base64.b64encode(computed_hmac).decode()
     if not hmac.compare_digest(computed_signature, signature):
@@ -74,7 +75,8 @@ def handle_webhook(webhook_request: WebhookRequestBody):
                     timestamp=sensor.event_date, value=sensor.measurement.value
                 )
 
-@app.route('/', methods=['POST'])
+
+@app.route("/", methods=["POST"])
 def webhook():
     logger.info("webhook triggered")
 
@@ -92,15 +94,16 @@ def webhook():
 
     logger.info("received body with %d items", len(request_body.root))
     handle_webhook(request_body)
-    return '', HTTPStatus.NO_CONTENT
+    return "", HTTPStatus.NO_CONTENT
 
 
-@app.route("/", methods=['GET'])
+@app.route("/", methods=["GET"])
 def current_state():
     return {k: v.model_dump() for k, v in current_state_map.items()}, HTTPStatus.OK
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     if hmac_secret_key is None:
         print("Missing WEBHOOK_SECRET_KEY")
         sys.exit(1)
-    app.run(host='0.0.0.0', port=port, debug=debug)
+    app.run(host="0.0.0.0", port=port, debug=debug)
