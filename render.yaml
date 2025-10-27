@@ -3,9 +3,9 @@ services:
     name: python webhook_receiver
     env: python
     buildCommand: ""
-    startCommand: "python webhook_receiver.py"
+    startCommand: "python application.py"
     plan: free
     autoDeploy: true
     envVars: []
     ports:
-      - port: 5000
+      - port: 8000
