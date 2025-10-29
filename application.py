@@ -76,7 +76,7 @@ def handle_webhook(webhook_request: WebhookRequestBody):
                 )
 
 
-@app.route("/", methods=["POST"])
+@app.route("/api/sensors/", methods=["POST"])
 def webhook():
     logger.info("webhook triggered")
 
@@ -97,22 +97,9 @@ def webhook():
     return "", HTTPStatus.NO_CONTENT
 
 
-@app.route("/", methods=["GET"])
+@app.route("/api/sensors/", methods=["GET"])
 def current_state():
     return {k: v.model_dump() for k, v in current_state_map.items()}, HTTPStatus.OK
-
-
-@app.route("/api/sensors/", methods=["POST"])
-def sensors():
-    try:
-        data = request.get_json()
-        validated = WebhookRequestBody.model_validate(data)
-        logger.info("Received %d items on /api/sensors/", len(validated.root))
-        return jsonify({"status": "success", "received": len(validated.root)}), 200
-    except Exception as e:
-        logger.error("Error on /api/sensors/: %s", str(e))
-        return jsonify({"status": "error", "message": str(e)}), 400
-
 
 if __name__ == "__main__":
     if hmac_secret_key is None:
